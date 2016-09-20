@@ -62,7 +62,9 @@ critical that you decide on good names now.
 
 This command (what they call a *Maven goal*) will create a directory for your
 project, with the name that you have specified for your artifact id. Once it's
-generated, navigate to that directory.
+generated, navigate to that directory. In my case, I've called the artifact id
+as `tutorial`, and you can find the `tutorial` project directory I've generated
+in this repository.
 
 It's good to familiarize yourself with the project structure that has been
 created within this directory. The most important thing to take note of is the
@@ -178,7 +180,7 @@ with
 </dependency>
 ```
 
-### Adding Build Information
+### Adding Build Description
 
 Add the following after the close tag for `dependency` and before the close tag
 for `project`:
@@ -310,3 +312,56 @@ exists `runtutorial.jar`, which we will run in the normal Java way, as follows:
 ```bash
 java -jar target/runtutorial.jar
 ```
+
+Upon running, you should get the output:
+
+```
+Hello world!
+```
+
+which is exactly as we'd expect. You can now go back and modify your Kotlin code
+as you please to continue developing your first Kotlin project using Maven. Be
+sure to run `mvn package` whenever you wish to compile and build a new JAR to
+run.
+
+## Revisiting the POM
+
+### Looking Back at the Build Description
+
+In a previous section, we hand-waved a chunk of information that was added to
+the POM to specify the build description. Let's take a quick look at that now.
+
+First, take notice to the `finalName` label within the `configuration` for the
+second plugin. Notice that it has been specified to `runtutorial`, which is the
+name of our JAR file. You can change this to anything else that you wish your
+JAR file to be named.
+
+Next, notice the `mainClass` label nested within the `manifest` and `archive`
+tags, also in the second plugin section. The main class is specified as
+`HelloKt`, which corresponds to the `Hello.Kt` file we have written. This
+specifies the entry point for your project (aka, which `main` will be run), and
+you can change this as you wish. For example, if you wish the entry point for
+your project to be in `init.kt`, then your `mainClass` label should point to
+`initKt`.
+
+I may add explanations of other pieces of the build description later.
+
+### Adding Third-Party Java and Kotlin Libraries
+
+If a library exists for Java or Kotlin and is on
+[Maven Central](http://search.maven.org/), you can add it to your project
+quite easily.
+
+For example, if I wished to add the [BURLAP](http://burlap.cs.brown.edu/)
+Reinforcement Learning library to my project, all I would have to do is add the
+following dependency to my POM:
+
+```
+<dependency>
+  <groupId>edu.brown.cs.burlap</groupId>
+  <artifactId>burlap</artifactId>
+  <version>3.0.0</version>
+</dependency>
+```
+
+You can then use `import` as you normally would.
